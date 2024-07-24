@@ -4,7 +4,12 @@ API in Python to recover information about a running Linux OS.
 
 ## Documentation
 
-TODO.
+This project is a convertion of the
+[Linux-Info](https://github.com/glasswalk3r/Linux-Info) project to Python.
+
+Although interface might be different, the features will probably be the same.
+
+TODO: create documentation in readthedocs website.
 
 ## Copyright and license
 
