@@ -1,52 +1,14 @@
 from abc import abstractmethod
-from typing import Dict, Tuple
-
 from linux_info.properties.distribution.base import Distribution
-
-
-class MissingStandardProperty(ValueError):
-    def __init__(self, file_path: str, missing: str) -> None:
-        super().__init__(f"Missing a expected property on {file_path}: {missing}")
-        self.file_path = file_path
-        self.missing = missing
-
-
-class InvalidKeyValueLine(ValueError):
-    def __init__(self, line: str) -> None:
-        super().__init__(f"Unexpected line format: {line}")
-        self.line = line
-
-
-def parse(file_path: str) -> Dict[str, str]:
-    data = {}
-
-    with open(file_path, "r") as fp:
-        for line in fp:
-            line = line.strip()
-
-            if line == "":
-                continue
-
-            pieces = line.split("=")
-
-            try:
-                data[pieces[0].lower()] = pieces[1].replace('"', "")
-            except IndexError:
-                raise InvalidKeyValueLine(line)
-
-    return data
-
-
-def default_source_file() -> str:
-    return "/etc/os-release"
+from linux_info.properties.distribution.os_release.file import default_source_file, parse, MissingStandardProperty
 
 
 class OSRelease(Distribution):
     def __init__(self, source: str = default_source_file()):
         self.source = source
-        self.cache: Dict[str, str] = parse(self.source)
+        self.cache: dict[str, str] = parse(self.source)
         self.pretty_name: None | str = None
-        self.id_like: None | Tuple[str, ...] = None
+        self.id_like: None | tuple[str, ...] = None
         self.home_url: None | str = None
         self._parse()
 
@@ -75,7 +37,7 @@ class OSRelease(Distribution):
             self.id_like = tuple(distros)
 
     @staticmethod
-    def parse_from_file(file_path: str = "/etc/os-release") -> Dict[str, str]:
+    def parse_from_file(file_path: str = "/etc/os-release") -> dict[str, str]:
         return parse(file_path)
 
     def clean_cache(self) -> None:
@@ -87,7 +49,7 @@ class OSRelease(Distribution):
         self.cache = {}
 
     @abstractmethod
-    def _handle_missing(self, data: Dict[str, str]) -> None:
+    def _handle_missing(self, data: dict[str, str]) -> None:
         """ "Handle missing fields.
 
         It should be overrided by subclasses of this class.
