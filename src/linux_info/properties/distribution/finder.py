@@ -1,6 +1,5 @@
-from pathlib import Path, PosixPath
+from pathlib import Path
 from collections import deque
-from typing import Deque
 
 
 class Finder:
@@ -40,15 +39,14 @@ class Finder:
 
     __slots__ = (
         "custom_source_dir",
-        "os_release",
         "custom_file",
-        "config_dir",
+        "_config_dir",
         "distro_info",
         "keep_cache",
     )
 
     def __init__(self, config_dir: str = "/etc", keep_cache: bool = False) -> None:
-        self.config_dir = config_dir
+        self._config_dir = config_dir
         self.keep_cache = keep_cache
         self.custom_source_dir = False
         self.custom_file = False
@@ -64,17 +62,23 @@ class Finder:
 
         return False
 
-    def set_config_dir(self, dir: str) -> None:
+    @property
+    def config_dir(self) -> str:
+        """Return the default configuration directory used by a instance."""
+        return self._config_dir
+
+    @config_dir.setter
+    def config_dir(self, dir: str) -> None:
         """Change the default configuration directory used by a instance.
 
         Useful for unit testing with mocks.
         """
-        self.config_dir = dir
+        self._config_dir = dir
         self.custom_source_dir = True
 
-    def _read_config_dir(self) -> Deque:
+    def _read_config_dir(self) -> deque[Path]:
         p = Path(self.config_dir)
-        candidates: Deque[Path] = deque()
+        candidates: deque[Path] = deque()
 
         for file in p.glob("*version", case_sensitive=True):
             candidates.append(file)

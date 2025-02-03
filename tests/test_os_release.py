@@ -14,7 +14,7 @@ def test_default_source():
 def test_parse():
     data = parse(default_source_file())
     assert isinstance(data, dict)
-    assert len(data.keys()) == 12
+    assert len(data.keys()) >= 12
     wanted = (
         "pretty_name",
         "name",

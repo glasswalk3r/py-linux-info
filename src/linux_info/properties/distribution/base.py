@@ -5,7 +5,7 @@ class Distribution:
     """This is a base class that defines the most basic information one could
     retrieve from a Linux distribution.
 
-    You probably want to the take a look of subclasses of this classes, unless
+    You probably want to the take a look of subclasses of this class, unless
     you looking for creating a entirely new classes tree.
 
     Also, you probably want to use a factory class to create new instances
