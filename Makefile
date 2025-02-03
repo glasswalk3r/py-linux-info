@@ -54,9 +54,6 @@ lint: ## check style with flake8
 test: ## run tests quickly with the default Python
 	pytest -v
 
-coverage:
-	pytest -v --cov
-
 release: dist ## package and upload a release
 	twine upload dist/*
 
@@ -78,3 +75,6 @@ docs: ## generate Sphinx HTML documentation, including API docs
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/build/html/index.html
+
+coverage:
+	pytest --cov-report=html --cov=linux_info tests/
