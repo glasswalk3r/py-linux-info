@@ -2,14 +2,68 @@
 
 API in Python to recover information about a running Linux OS.
 
-## Documentation
+## How to use it
+
+## Development
+
+### Classes
+
+```mermaid
+---
+title: Classes related to Linux distributions information
+---
+classDiagram
+    note "All classes are part of the 'distribution' package"
+    class Distribution{
+    }
+    namespace dto {
+        class Basic{
+        }
+    }
+    class Finder{
+    }
+    class Factory{
+    }
+    namespace os_release{
+        class OSRelease{
+        }
+        class Alpine{
+        }
+        class Amazon{
+        }
+        class Debian{
+        }
+        class Raspbian{
+        }
+        class RedHat{
+        }
+        class Rocky{
+        }
+        class Ubuntu{
+        }
+        class CentOS{
+        }
+    }
+    Distribution <|-- OSRelease
+    OSRelease <|-- Alpine
+    OSRelease <|-- Amazon
+    OSRelease <|-- Debian
+    OSRelease <|-- Raspbian
+    OSRelease <|-- RedHat
+    OSRelease <|-- Rocky
+    OSRelease <|-- Ubuntu
+    OSRelease <|-- CentOS
+    Basic o-- Finder
+    Basic o-- Factory
+
+```
+
+## Related projects
 
 This project is a convertion of the
 [Linux-Info](https://github.com/glasswalk3r/Linux-Info) project to Python.
 
 Although interface might be different, the features will probably be the same.
-
-TODO: create documentation in readthedocs website.
 
 ## Copyright and license
 
